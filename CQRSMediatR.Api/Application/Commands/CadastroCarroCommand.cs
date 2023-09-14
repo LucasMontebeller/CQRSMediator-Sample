@@ -22,7 +22,7 @@ namespace CQRSMediatR.Api.Application.Commands
 
         public CadastroCarroCommand(Carro carro)
         {
-            Nome = carro.GetNome();
+            Nome = carro.Nome;
             Valor = carro.Valor;
             Fabricante = carro.Fabricante;
         }

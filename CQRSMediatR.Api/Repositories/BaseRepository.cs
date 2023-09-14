@@ -14,7 +14,7 @@ namespace CQRSMediatR.Api.Repositories
             if (!await ExistsAsync(entity))
             {
                 await Task.Run(() => Entidade.Add(entity));
-                return entity.GetId();
+                return entity.Id;
             }
             throw new Exception("O carro informado já existe.");
         }
@@ -26,7 +26,7 @@ namespace CQRSMediatR.Api.Repositories
 
         public async Task<T?> GetBydIdAsync(Guid id)
         {
-            return await Task.Run(() => Entidade.FirstOrDefault(x => x.GetId() == id)) ?? default;
+            return await Task.Run(() => Entidade.FirstOrDefault(x => x.Id== id)) ?? default;
         }
 
         public async Task RemoveAsync(T entity)
@@ -37,7 +37,7 @@ namespace CQRSMediatR.Api.Repositories
         private static Task<bool> ExistsAsync(T entity)
         {
             return Task.Run(() => {
-                return Entidade.FirstOrDefault(x => x.GetNome() == entity.GetNome()) is not null;
+                return Entidade.FirstOrDefault(x => x.Nome == entity.Nome) is not null;
             });
         }
     }

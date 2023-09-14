@@ -20,11 +20,33 @@ namespace CQRSMediatR.Api.Controllers
             _carroRepository = carroRepository;
         }
 
+        [HttpGet]
+        [Route("Get")]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(await _carroRepository.GetAllAsync());
+        }
+
+        [HttpGet]
+        [Route("Get/{id}")]
+        public async Task<IActionResult> GetAsync(Guid id)
+        {
+            return Ok(await _carroRepository.GetBydIdAsync(id));
+        }
+
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Post(CadastroCarroCommand cadastroCarroCommand)
+        public async Task<IActionResult> PostAsync(CadastroCarroCommand cadastroCarroCommand)
         {
             var response = await _mediator.Send(cadastroCarroCommand);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("Remove")]
+        public async Task<IActionResult> DeleteAsync(ExcluiCarroCommand excluiCarroCommand)
+        {
+            var response = await _mediator.Send(excluiCarroCommand);
             return Ok(response);
         }
     }
