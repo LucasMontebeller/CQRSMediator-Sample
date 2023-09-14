@@ -1,5 +1,5 @@
 using CQRSMediatR.Api.Abstraction;
-using CQRSMediatR.Api.Application.Enums;
+using CQRSMediatR.Api.Enums;
 
 namespace CQRSMediatR.Api.Application.Models
 {

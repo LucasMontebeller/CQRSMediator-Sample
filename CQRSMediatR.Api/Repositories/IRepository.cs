@@ -4,7 +4,7 @@ namespace CQRSMediatR.Repositories
     {
         Task<T?> GetBydIdAsync(Guid id);
         Task<List<T>?> GetAllAsync();
-        Task<bool> AddAsync(T entity);
-        Task<bool> RemoveAsync(T entity); 
+        Task<Guid> AddAsync(T entity);
+        Task RemoveAsync(T entity); 
     }
 }

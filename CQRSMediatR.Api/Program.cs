@@ -1,4 +1,9 @@
+using System.Reflection;
+using CQRSMediatR.Api.Abstraction;
+using CQRSMediatR.Api.Application.Models;
 using CQRSMediatR.Api.Repositories;
+using CQRSMediatR.Repositories;
+using MediatR;
 
 internal class Program
 {
@@ -13,7 +18,8 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddScoped<CarroRepository>();
+        builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        builder.Services.AddScoped<IRepository<Carro>, BaseRepository<Carro>>();
 
         var app = builder.Build();
 

@@ -2,8 +2,8 @@ namespace CQRSMediatR.Api.Abstraction
 {
     public abstract class EntityBase
     {
-        protected Guid Id { get; }
-        protected string Nome { get; set; }
+        protected Guid Id { get; private set; }
+        protected string Nome { get; private set; }
 
         protected EntityBase(string nome)
         {
@@ -15,5 +15,11 @@ namespace CQRSMediatR.Api.Abstraction
         {
             return Id;
         }
+
+        public string GetNome()
+        {
+            return Nome;
+        }
+
     }
 }

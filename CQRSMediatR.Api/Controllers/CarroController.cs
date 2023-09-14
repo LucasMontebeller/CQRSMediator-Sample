@@ -1,6 +1,8 @@
-using CQRSMediatR.Api.Application.Enums;
+using CQRSMediatR.Api.Application.Commands;
 using CQRSMediatR.Api.Application.Models;
-using CQRSMediatR.Api.Repositories;
+using CQRSMediatR.Api.Enums;
+using CQRSMediatR.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRSMediatR.Api.Controllers
@@ -9,17 +11,21 @@ namespace CQRSMediatR.Api.Controllers
     [Route("api/[controller]")]
     public class CarroController : ControllerBase
     {
-        // Para a POC, não há necessidade de usar uma injeção de interface ou ServiceProvider
-        private readonly static CarroRepository _carroRepository = new();
+        private readonly IMediator _mediator;
+        private readonly IRepository<Carro> _carroRepository;
+
+        public CarroController(IMediator mediator, IRepository<Carro> carroRepository)
+        {
+            _mediator = mediator;
+            _carroRepository = carroRepository;
+        }
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> InsertSample()
+        public async Task<IActionResult> Post(CadastroCarroCommand cadastroCarroCommand)
         {
-            var success = await _carroRepository.AddAsync(new Carro("Civic Si 2008", 70000, EFabricante.Honda));
-            if (!success)
-                return BadRequest("Falha ao inserir o registro !");    
-            return Ok("Registro inserido com sucesso !");
+            var response = await _mediator.Send(cadastroCarroCommand);
+            return Ok(response);
         }
     }
 }
